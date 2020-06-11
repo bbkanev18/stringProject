@@ -43,13 +43,15 @@ void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, 
 	while (loop)
 	{
 		system("CLS");
-		cout << ".::Menu::.\n";
+		titleMsg("Hangman Main Menu");
+		newLine();
 		cout << "1. 1-level" << " [" << unlock << "]\n";
 		cout << "2. 2-level" << " [" << lock[0] << "]\n";
 		cout << "3. 3-level" << " [" << lock[1] << "]\n";
 		cout << "4. back to main menu\n";
 
-		cout << "Your point: " << point << "\n";
+		cout << "Your point: " << point;
+		newLine();
 		cin >> chooseOpstion;
 		if (chooseOpstion == 2)
 		{
@@ -93,7 +95,8 @@ void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, 
 					break;
 
 				case 2:
-					cout << "Not saved!\n";
+					Msg("Not saved!");
+					newLine();
 					system("pause");
 					break;
 				}
@@ -175,14 +178,14 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 		system("CLS");
 		int a;
 		size_t found;
-		cout << "Lives: " << lives << "\n";
+		cout << "Lives: " << lives;
+		newLine();
 		for (int i = 0; i < que[random].length(); i++)
 		{
 			cout << MakeWord[i];
 
 		}
-		cout << endl;
-		cout << endl;
+		newLine(2);
 
 		//make board
 		for (int i = 0; i < 22; i++)
@@ -199,7 +202,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 				cout << MakeMap[i][j];
 			}
 			cout << MakeBorder[i];
-			cout << endl;
+			newLine();
 		}
 
 		for (int i = 0; i < 22; i++)
@@ -210,8 +213,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 		int sum = 0;
 
-		cout << "\n";
-		cout << "\n";
+		newLine(2);
 		cout << "Enter 1 or 2\n";
 		cout << "1. Choose to guess a word.\n";
 		cout << "2. Choose to guess a letter (only one letter and don't write again the same letter if you write already.)\n";
@@ -232,7 +234,8 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 			cin >> ansUser;
 			if (ansUser == que[random])
 			{
-				cout << "Your answear is correct!\n";
+				cout << "Your answear is correct!";
+				newLine();
 				point = point + (que[random].length() * 10);
 				_getch();
 				HangMenu(loop, que, ansUser, random, lives, point);
@@ -269,7 +272,8 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 					}
 					if (stopProgram == 0)
 					{
-						cout << "Your word: " << que[random] << "\n";
+						cout << "Your word: " << que[random];
+						newLine();
 						cout << "You win!";
 						_getch();
 						HangMenu(loop, que, ansUser, random, lives, point);
@@ -279,9 +283,9 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 			//incorrect
 			else
 			{
-				cout << "Your letter is wrong!\n";
+				Msg("Your letter is wrong!");
+				newLine();
 				lives--;
-				system("pause");
 			}
 
 			break;
@@ -294,6 +298,9 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 			cout << "\nYou lose :(";
 			_getch();
 			HangMenu(loop, que, ansUser, random, lives, point);
+			break;
+		default:
+			Msg();
 			break;
 		}
 
@@ -309,7 +316,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[9][j] = "x ";
 				}
-				cout << endl;
+				newLine();
 			}
 		}
 		//when you have 6 live
@@ -323,7 +330,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[i][2] = "x ";
 				}
-				cout << endl;
+				newLine();
 			}
 		}
 		//when you have 5 live
@@ -337,7 +344,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[i][2] = "x ";
 				}
-				cout << endl;
+				newLine();
 			}
 		}
 
@@ -352,7 +359,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[0][j] = "x ";
 				}
-				cout << endl;
+				newLine();
 
 			}
 
@@ -364,7 +371,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[1][7] = "x ";
 				}
-				cout << endl;
+				newLine();
 			}
 		}
 
@@ -379,7 +386,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[2][7] = "0 ";
 				}
-				cout << endl;
+				newLine();
 			}
 
 			for (int i = 3; i < 5; i++)
@@ -390,7 +397,7 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 
 					MakeMap[i][7] = "| ";
 				}
-				cout << endl;
+				newLine();
 			}
 		}
 
@@ -492,8 +499,10 @@ void game(bool loop, string que[], string ansUser, int& random, int& lives, int&
 		}
 	} while (lives >= 1);
 
-	cout << "\nYou lose!\n";
-	cout << "Your word: " << que[random] << "\n";
+	newLine();
+	cout << "You lose!\n";
+	cout << "Your word: " << que[random];
+	newLine();
 }
 
 void level1(bool loop, string que[], string ansUser, int& random, int& lives, int& point)

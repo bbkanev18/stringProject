@@ -32,5 +32,8 @@
     <ClInclude Include="MainFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TickTackToe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

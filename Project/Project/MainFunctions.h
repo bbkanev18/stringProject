@@ -21,6 +21,8 @@ inline int rng(int min, int  max);
 
 inline void titleMsg(string str = "Menu");
 
+inline void newLine(int amount = 1);
+
 // Functions - Definition ::::::>
 inline void Msg(string str, int n)
 {
@@ -92,4 +94,12 @@ inline void titleMsg(string str)
 	}
 
 	cout << out;
+}
+
+inline void newLine(int amount)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		cout << "\n";
+	}
 }

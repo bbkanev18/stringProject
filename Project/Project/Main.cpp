@@ -8,6 +8,7 @@ using namespace std;
 // Header Files ::::::>
 #include "FizzBuzz.h"
 #include "HangMan.h"
+#include "TickTackToe.h"
 #include "MainFunctions.h"
 
 // Structures ::::::>
@@ -33,7 +34,8 @@ void gameMenu()
 		system("CLS");
 
 		titleMsg("Choose a game");
-		cout << "Esc. Quit...\n1. FizzBuzz...\n2. Hangman...\n";
+		cout << "Esc. Quit...\n1. FizzBuzz...\n2. Hangman...\n3. Tick Tack Toe...";
+		//TODO add ticktacktoe option if it works :)
 
 		switch (_getch())
 		{
@@ -45,6 +47,9 @@ void gameMenu()
 			break;
 		case '2':
 			h_main();
+			break;
+		case '3':
+			t_main();
 			break;
 		default:
 			Msg();
@@ -64,6 +69,9 @@ void mainMenu()
 
 		titleMsg("Main Menu");
 		cout << "Esc. Quit...\n1. Games...\n2. About us...\n3. Program Info...\n";
+		//TODO add an about us option
+		//TODO add program info option
+
 
 		switch (_getch())
 		{

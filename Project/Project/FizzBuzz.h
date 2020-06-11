@@ -111,7 +111,8 @@ void f_gameLoop(RULES* rule, int rNum)
 
 		if (str == "")	str = to_string(i);
 
-		cout << str << "\n";
+		cout << str;
+		newLine();
 	}
 	_getch();
 }
@@ -157,8 +158,8 @@ void f_info() // Prints how the game is played
 	cout << "Fizz buzz is a group word game for children to teach them about division.";
 	cout << "\nPlayers take turns to count incrementally, \nreplacing any number divisible by three with the word 'fizz', \nand any number divisible by five with the word 'buzz'.";
 
-
-	cout << "\n\n\nPress any button to continue.";
+	newLine(2);
+	cout << "Press any button to continue.";
 	_getch();
 }
 
@@ -187,16 +188,19 @@ void f_ruleShow(RULES* rule, int rNum)
 {
 	for (int i = 0; i < rNum; i++)
 	{
+		rule[i].id = i;
 		f_rulePrint(rule[i], rule[i].id);
 	}
-	cout << "\n\n\nPress a key to continue";
+	newLine(2);
+	cout << "Press a key to continue";
 	_getch();
 }
 
 void f_ruleRemove(RULES* rule, int& rNum)
 {
 	int index;
-	cout << "\n\nChoose id: ";
+	newLine(2);
+	cout << "Choose id: ";
 	cin >> index;
 
 	system("CLS");
@@ -204,7 +208,7 @@ void f_ruleRemove(RULES* rule, int& rNum)
 	if (index > rNum or index < 0) //checking index in range of client counter 
 	{
 		Msg();
-		cout << "\n";
+		newLine();
 		f_ruleShow(rule, rNum);
 		f_ruleRemove(rule, rNum);
 	}
@@ -226,11 +230,11 @@ void f_ruleRemove(RULES* rule, int& rNum)
 
 void f_rulePrint(RULES cRule, int id)
 {
-
-	cout << "\nId: " << id;
+	newLine();
+	cout << "Id: " << id;
 	cout << "\nSuffix: " << cRule.sfix;
 	cout << "\nNumber: " << cRule.pNum;
-	cout << "\n";
+	newLine();
 }
 
 string f_gameCheckRule(RULES cRule, int i)
@@ -240,3 +244,7 @@ string f_gameCheckRule(RULES cRule, int i)
 	else
 		return "";
 }
+
+//TODO ALLOW USER TO INPUT ANY NUMBERS ?
+//TODO MAKE A CHECK IF A NUMBER REPEATS
+//TODO ADD SETTINGS TO BE ABLE TO TURN ON OR OFF IDEAS FROM LINE 2 AND 3
