@@ -2,46 +2,151 @@
 #include <iostream>
 #include<string>
 #include <time.h> 
-#include <set>
 
 using namespace std;
 
+void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
 
-int h_main()
+void game(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+
+void level1(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+
+void level2(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+
+void level3(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+
+void h_main()
 {
-	//first game test
-	/*
-	srand(time(NULL));
-	int random;
-	string ansUser;
-	string que[3] = { "hello","hello1","hello2" };
-	string ans[3] = { "ans for hello", "ans for hello1", "ans for hello2" };
-	random = rand() % 2 + 0;
-	cout << que[random] << endl;
-	getline(cin, ansUser);
-	if (ansUser == ans[random]) {
-		cout << "It is correct!";
-	}
-	else {
-		cout << "It is wrong!"<<endl;
-		cout << ans[random];
-	}
-	*/
-
 
 	// second game test
-
-	set<char> usedLetters;
 	srand(time(NULL));
 	int random;
-	random = rand() % 9 + 0;
+	int point = 0;
 	int lives = 8;
+	bool loop = true;
+	random = rand() % 9 + 0;
 	string que[10] = { "cat","fish","dog","jazz","people","boris","congratulations","pewdiepie","pizza" ,"google" };
 	string ansUser;
+	int stopProgram = que[random].length();
+
+	HangMenu(loop, que, ansUser, random, lives, point);
+}
+
+void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+{
+	int chooseOpstion;
+	int chooseForLock;
+	size_t found;
+	string lock[2]{ "lock","lock" };
+	string lockCheck = "lock";
+	string unlock = "unlock";
+	while (loop)
+	{
+		system("CLS");
+		cout << ".::Menu::.\n";
+		cout << "1. 1-level" << " [" << unlock << "]\n";
+		cout << "2. 2-level" << " [" << lock[0] << "]\n";
+		cout << "3. 3-level" << " [" << lock[1] << "]\n";
+		cout << "4. back to main menu\n";
+
+		cout << "Your point: " << point << "\n";
+		cin >> chooseOpstion;
+		if (chooseOpstion == 2)
+		{
+
+			if (point >= 500 and lock[0] == lockCheck)
+			{
+				cout << "Do you want to unlock level?\n";
+				cout << "1. yes\n";
+				cout << "2. no\n";
+				cin >> chooseForLock;
+				switch (chooseForLock)
+				{
+				case 1:
+					lock[0] = unlock;
+					point = point - 500;
+					break;
+
+				case 2:
+					cout << "Not saved!\n";
+					system("pause");
+					break;
+				}
+				continue;
+			}
+		}
+
+		if (chooseOpstion == 3)
+		{
+
+			if (point >= 1000 and lock[1] == lockCheck)
+			{
+				cout << "Do you want to unlock level?\n";
+				cout << "1. yes\n";
+				cout << "2. no\n";
+				cin >> chooseForLock;
+				switch (chooseForLock)
+				{
+				case 1:
+					lock[1] = unlock;
+					point = point - 1000;
+					break;
+
+				case 2:
+					cout << "Not saved!\n";
+					system("pause");
+					break;
+				}
+				continue;
+			}
+		}
+
+		switch (chooseOpstion)
+		{
+		case 0:
+			point = point + 1000;
+			break;
+		case 1:
+			level1(loop, que, ansUser, random, lives, point);
+			break;
+		case 2:
+			if (lock[0] == unlock) {
+				level2(loop, que, ansUser, random, lives, point);
+
+			}
+			else
+			{
+				cout << "This level is lock!\n";
+				cout << "You need 500 point\n";
+				system("pause");
+			}
+			break;
+		case 3:
+			if (lock[1] == unlock) {
+				level3(loop, que, ansUser, random, lives, point);
+
+			}
+			else
+			{
+				cout << "This level is lock!\n";
+				cout << "You need 1000 point\n";
+				system("pause");
+			}
+			break;
+		case 4:
+			loop = false;
+			break;
+		}
+	}
+}
+
+
+void game(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+{
+	int stopProgram = que[random].length();
 	string MakeWord[50];
 	string MakeMap[20][20];
 	char MakeBorder[50];
-	int stopProgram = que[random].length();
 
 	//make a word invisible
 	for (int i = 0; i < que[random].length(); i++)
@@ -64,7 +169,6 @@ int h_main()
 
 		}
 	}
-
 
 	do
 	{
@@ -121,15 +225,17 @@ int h_main()
 			sum = lives - 8;
 			cout << "lives-8= " << sum;
 			cout << "\nYou lose :(";
-			return 0;
-			break;
+			_getch();
+			HangMenu(loop, que, ansUser, random, lives, point);
 			//guess a word
 		case 1:
 			cin >> ansUser;
 			if (ansUser == que[random])
 			{
 				cout << "Your answear is correct!\n";
-				return 0;
+				point = point + (que[random].length() * 10);
+				_getch();
+				HangMenu(loop, que, ansUser, random, lives, point);
 			}
 			else
 			{
@@ -145,9 +251,6 @@ int h_main()
 			//guess a letter
 			cin >> ansUser;
 			char usedLetter = ansUser[0];
-			if (usedLetters.count(usedLetter) == 0) {
-				usedLetters.insert(usedLetter);
-			}
 			found = que[random].find(ansUser);
 			// correct
 			if (found != string::npos)
@@ -159,16 +262,17 @@ int h_main()
 						if (que[random].substr(i, 1) == ansUser)
 						{
 							MakeWord[i] = ansUser;
-							if (usedLetters.count(ansUser.at(0)) == 0) {
-								stopProgram--;
-							}
+							stopProgram--;
+							point = point + 10;
+
 						}
 					}
 					if (stopProgram == 0)
 					{
 						cout << "Your word: " << que[random] << "\n";
 						cout << "You win!";
-						return 0;
+						_getch();
+						HangMenu(loop, que, ansUser, random, lives, point);
 					}
 				}
 			}
@@ -183,12 +287,13 @@ int h_main()
 			break;
 		}
 		case 2147483647:
-			cout << "\nI say enter 1 or 2 no 999999999023820649264204 you a fucking bitch. For that you lose the game, bithc.\n";
+			cout << "\nI say enter 1 or 2 no 999999999023820649264204 you a fucking bitch. For that you lose the game, bitch.\n";
 			cout << "You dead instant because you are stupped!\n";
 			sum = lives - 8;
 			cout << "lives-8= " << sum;
 			cout << "\nYou lose :(";
-			return 0;
+			_getch();
+			HangMenu(loop, que, ansUser, random, lives, point);
 			break;
 		}
 
@@ -389,115 +494,47 @@ int h_main()
 
 	cout << "\nYou lose!\n";
 	cout << "Your word: " << que[random] << "\n";
+}
 
-
-
-	//test manu
-	/*
-	bool stopWhile = true;
-	int chooseOpstion;
-	int chooseForLock;
-	int point = 0;
-	size_t found;
-	string lock[2]{ "lock","lock" };
-	string lockCheck = "lock";
-	string unlock="unlock";
-	while (stopWhile)
+void level1(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+{
+	random = rand() % 9 + 0;
+	if (que[random].length() > 4)
 	{
-		system("CLS");
-		cout << ".::Menu::.\n";
-		cout << "1. 1-level" << " [" << unlock << "]\n";
-		cout << "2. 2-level" << " [" << lock[0] << "]\n";
-		cout << "3. 3-level" << " [" << lock[1] << "]\n";
-		cout << "4. back to main menu\n";
-
-		cout << "Your point: " << point << "\n";
-		cin >> chooseOpstion;
-		if (chooseOpstion == 2)
-		{
-
-			if (point >= 100 and lock[0]==lockCheck)
-			{
-				cout << "Do you want to unlock level?\n";
-				cout << "1. yes\n";
-				cout << "2. no\n";
-				cin >> chooseForLock;
-				switch (chooseForLock)
-				{
-				case 1:
-					lock[0] = unlock;
-					point = point - 100;
-					break;
-
-				case 2:
-					cout << "Not saved!\n";
-					system("pause");
-					break;
-				}
-				continue;
-			}
-		}
-
-		if (chooseOpstion == 3)
-		{
-
-			if (point >= 1000 and lock[1] == lockCheck)
-			{
-				cout << "Do you want to unlock level?\n";
-				cout << "1. yes\n";
-				cout << "2. no\n";
-				cin >> chooseForLock;
-				switch (chooseForLock)
-				{
-				case 1:
-					lock[1] = unlock;
-					point = point - 1000;
-					break;
-
-				case 2:
-					cout << "Not saved!\n";
-					system("pause");
-					break;
-				}
-				continue;
-			}
-		}
-
-		switch (chooseOpstion)
-		{
-		case 1:
-			point = point + 1000;
-			break;
-		case 2:
-			if (lock[0] == unlock) {
-				cout << "main functio\n";
-				system("pause");
-			}
-			else
-			{
-				cout << "This level is lock!\n";
-				cout << "You need 100 point\n";
-				system("pause");
-			}
-			break;
-		case 3:
-			if (lock[1] == unlock) {
-				cout << "main functio\n";
-				system("pause");
-			}
-			else
-			{
-				cout << "This level is lock!\n";
-				cout << "You need 1000 point\n";
-				system("pause");
-			}
-			break;
-		case 4:
-			stopWhile = false;
-			break;
-		}
+		level1(loop, que, ansUser, random, lives, point);
 	}
-	*/
+	else
+	{
+		game(loop, que, ansUser, random, lives, point);
+	}
+}
 
+void level2(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+{
+	random = rand() % 9 + 0;
+	if (que[random].length() < 5)
+	{
+		level2(loop, que, ansUser, random, lives, point);
+	}
+	else if (que[random].length() > 9)
+	{
+		level2(loop, que, ansUser, random, lives, point);
+	}
+	else
+	{
+		game(loop, que, ansUser, random, lives, point);
+	}
+}
 
+void level3(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+{
+	random = rand() % 9 + 0;
+	if (que[random].length() < 10)
+	{
+		level3(loop, que, ansUser, random, lives, point);
+	}
+	else
+	{
+		game(loop, que, ansUser, random, lives, point);
+	}
 }
