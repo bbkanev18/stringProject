@@ -15,19 +15,21 @@ using namespace std;
 
 
 // Functions - Declaration ::::::>
-void gameMenu();
+void gameMenu(string lock[]);
 
 void mainMenu();
 
 // Main ::::::>
 int main()
 {
-	gameMenu();
+	string lock[2] = { "lock","lock" };
+	gameMenu(lock);
 }
 
 // Functions - Definition ::::::>
-void gameMenu()
+void gameMenu(string lock[])
 {
+	
 	bool inLoop = true;
 	while (inLoop)
 	{
@@ -46,7 +48,7 @@ void gameMenu()
 			f_main();
 			break;
 		case '2':
-			h_main();
+			h_main(lock);
 			break;
 		case '3':
 			t_main();

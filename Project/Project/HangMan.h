@@ -5,17 +5,17 @@
 
 using namespace std;
 
-void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, int& point, string lock[]);
 
-void game(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+int game(bool& loop, string que[], string ansUser, int& random, int lives, int& point);
 
-void level1(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+void level1(bool& loop, string que[], string ansUser, int& random, int lives, int& point);
 
-void level2(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+void level2(bool& loop, string que[], string ansUser, int& random, int lives, int& point);
 
-void level3(bool loop, string que[], string ansUser, int& random, int& lives, int& point);
+void level3(bool& loop, string que[], string ansUser, int& random, int lives, int& point);
 
-void h_main()
+void h_main(string lock[])
 {
 
 	// second game test
@@ -28,16 +28,18 @@ void h_main()
 	string que[10] = { "cat","fish","dog","jazz","people","boris","congratulations","pewdiepie","pizza" ,"google" };
 	string ansUser;
 	int stopProgram = que[random].length();
+	
+	
+	HangMenu(loop, que, ansUser, random, lives, point, lock);
+	
 
-	HangMenu(loop, que, ansUser, random, lives, point);
 }
 
-void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, int& point, string lock[])
 {
 	int chooseOpstion;
 	int chooseForLock;
 	size_t found;
-	string lock[2]{ "lock","lock" };
 	string lockCheck = "lock";
 	string unlock = "unlock";
 	while (loop)
@@ -140,410 +142,428 @@ void HangMenu(bool loop, string que[], string ansUser, int& random, int& lives, 
 			loop = false;
 			break;
 		}
+
+		if (!loop)
+			break;
 	}
 }
 
 
-void game(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+int game(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
 {
-	int stopProgram = que[random].length();
-	string MakeWord[50];
-	string MakeMap[20][20];
-	char MakeBorder[50];
-
-	//make a word invisible
-	for (int i = 0; i < que[random].length(); i++)
+	if (loop)
 	{
-		MakeWord[i] = " _ ";
 
-	}
+		int stopProgram = que[random].length();
+		string MakeWord[50];
+		string MakeMap[20][20];
+		char MakeBorder[50];
 
-	//make map
-	for (int i = 0; i < 22; i++)
-	{
-		MakeBorder[i] = '*';
-	}
-
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j <= 10; j++)
-		{
-			MakeMap[i][j] = "  ";
-
-		}
-	}
-
-	do
-	{
-		system("CLS");
-		int a;
-		size_t found;
-		cout << "Lives: " << lives;
-		newLine();
+		//make a word invisible
 		for (int i = 0; i < que[random].length(); i++)
 		{
-			cout << MakeWord[i];
+			MakeWord[i] = " _ ";
 
 		}
-		newLine(2);
 
-		//make board
+		//make map
 		for (int i = 0; i < 22; i++)
 		{
-			cout << MakeBorder[i];
+			MakeBorder[i] = '*';
 		}
-		cout << endl;
-		//make map
+
 		for (int i = 0; i < 10; i++)
 		{
-			cout << MakeBorder[i];
-			for (int j = 0; j < 10; j++)
+			for (int j = 0; j <= 10; j++)
 			{
-				cout << MakeMap[i][j];
+				MakeMap[i][j] = "  ";
+
 			}
-			cout << MakeBorder[i];
+		}
+
+		do
+		{
+			system("CLS");
+			int a;
+			size_t found;
+			cout << "Lives: " << lives;
 			newLine();
-		}
-
-		for (int i = 0; i < 22; i++)
-		{
-			cout << MakeBorder[i];
-		}
-
-
-		int sum = 0;
-
-		newLine(2);
-		cout << "Enter 1 or 2\n";
-		cout << "1. Choose to guess a word.\n";
-		cout << "2. Choose to guess a letter (only one letter and don't write again the same letter if you write already.)\n";
-		cin >> a;
-		switch (a)
-		{
-		case 0:
-
-			cout << "\nYou a fucking bitch! I say first write a number no letter stupped!\n";
-			cout << "You dead instant because you are stupped!\n";
-			sum = lives - 8;
-			cout << "lives-8= " << sum;
-			cout << "\nYou lose :(";
-			_getch();
-			HangMenu(loop, que, ansUser, random, lives, point);
-			//guess a word
-		case 1:
-			cin >> ansUser;
-			if (ansUser == que[random])
+			for (int i = 0; i < que[random].length(); i++)
 			{
-				cout << "Your answear is correct!";
-				newLine();
-				point = point + (que[random].length() * 10);
-				_getch();
-				HangMenu(loop, que, ansUser, random, lives, point);
+				cout << MakeWord[i];
+
 			}
-			else
+			newLine(2);
+
+			//make board
+			for (int i = 0; i < 22; i++)
 			{
-				cout << "Your answear is wrong!\n";
-				lives--;
-				system("pause");
+				cout << MakeBorder[i];
 			}
-			break;
-
-
-		case 2:
-		{
-			//guess a letter
-			cin >> ansUser;
-			char usedLetter = ansUser[0];
-			found = que[random].find(ansUser);
-			// correct
-			if (found != string::npos)
+			cout << endl;
+			//make map
+			for (int i = 0; i < 10; i++)
 			{
-				if (stopProgram > 0)
+				cout << MakeBorder[i];
+				for (int j = 0; j < 10; j++)
 				{
-					for (int i = 0; i <= que[random].length(); i++)
-					{
-						if (que[random].substr(i, 1) == ansUser)
-						{
-							MakeWord[i] = ansUser;
-							stopProgram--;
-							point = point + 10;
+					cout << MakeMap[i][j];
+				}
+				cout << MakeBorder[i];
+				newLine();
+			}
 
+			for (int i = 0; i < 22; i++)
+			{
+				cout << MakeBorder[i];
+			}
+
+
+			int sum = 0;
+
+			newLine(2);
+			cout << "Enter 1 or 2\n";
+			cout << "1. Choose to guess a word.\n";
+			cout << "2. Choose to guess a letter (only one letter and don't write again the same letter if you write already.)\n";
+			cin >> a;
+			switch (a)
+			{
+			case 0:
+
+				cout << "\nYou a fucking bitch! I say first write a number no letter stupped!\n";
+				cout << "You dead instant because you are stupped!\n";
+				sum = lives - 8;
+				cout << "lives-8= " << sum;
+				cout << "\nYou lose :(";
+				_getch();
+				return 0;
+				//guess a word
+			case 1:
+				cin >> ansUser;
+				if (ansUser == que[random])
+				{
+					cout << "Your answear is correct!";
+					newLine();
+					point = point + (stopProgram * 10);
+					_getch();
+					return 0;
+				}
+				else
+				{
+					cout << "Your answear is wrong!\n";
+					lives--;
+					system("pause");
+				}
+				break;
+
+
+			case 2:
+			{
+				//guess a letter
+				cin >> ansUser;
+				char usedLetter = ansUser[0];
+				found = que[random].find(ansUser);
+				// correct
+				if (found != string::npos)
+				{
+					if (stopProgram > 0)
+					{
+						for (int i = 0; i <= que[random].length(); i++)
+						{
+							if (que[random].substr(i, 1) == ansUser)
+							{
+								MakeWord[i] = ansUser;
+								stopProgram--;
+								point = point + 10;
+
+							}
+						}
+						if (stopProgram == 0)
+						{
+							cout << "Your word: " << que[random];
+							newLine();
+							cout << "You win!";
+							_getch();
+							return 0;
 						}
 					}
-					if (stopProgram == 0)
+				}
+				//incorrect
+				else
+				{
+					Msg("Your letter is wrong!");
+					newLine();
+					lives--;
+				}
+
+				break;
+			}
+			case 2147483647:
+				cout << "\nI say enter 1 or 2 no 999999999023820649264204 you a fucking bitch. For that you lose the game, bitch.\n";
+				cout << "You dead instant because you are stupped!\n";
+				sum = lives - 8;
+				cout << "lives-8= " << sum;
+				cout << "\nYou lose :(";
+				_getch();
+				return 0;
+				break;
+			default:
+				Msg();
+				break;
+			}
+
+			//start bilding a hangman
+			//when you have 7 live
+			if (lives == 7)
+			{
+				for (int i = 0; i < 1; i++)
+				{
+
+					for (int j = 0; j < 5; j++)
 					{
-						cout << "Your word: " << que[random];
-						newLine();
-						cout << "You win!";
-						_getch();
-						HangMenu(loop, que, ansUser, random, lives, point);
+
+						MakeMap[9][j] = "x ";
 					}
+					newLine();
 				}
 			}
-			//incorrect
-			else
+			//when you have 6 live
+			else if (lives == 6)
 			{
-				Msg("Your letter is wrong!");
-				newLine();
-				lives--;
-			}
-
-			break;
-		}
-		case 2147483647:
-			cout << "\nI say enter 1 or 2 no 999999999023820649264204 you a fucking bitch. For that you lose the game, bitch.\n";
-			cout << "You dead instant because you are stupped!\n";
-			sum = lives - 8;
-			cout << "lives-8= " << sum;
-			cout << "\nYou lose :(";
-			_getch();
-			HangMenu(loop, que, ansUser, random, lives, point);
-			break;
-		default:
-			Msg();
-			break;
-		}
-
-		//start bilding a hangman
-		//when you have 7 live
-		if (lives == 7)
-		{
-			for (int i = 0; i < 1; i++)
-			{
-
-				for (int j = 0; j < 5; j++)
+				for (int i = 5; i < 9; i++)
 				{
 
-					MakeMap[9][j] = "x ";
-				}
-				newLine();
-			}
-		}
-		//when you have 6 live
-		else if (lives == 6)
-		{
-			for (int i = 5; i < 9; i++)
-			{
+					for (int j = 0; j < 1; j++)
+					{
 
-				for (int j = 0; j < 1; j++)
+						MakeMap[i][2] = "x ";
+					}
+					newLine();
+				}
+			}
+			//when you have 5 live
+			else if (lives == 5)
+			{
+				for (int i = 0; i < 5; i++)
 				{
 
-					MakeMap[i][2] = "x ";
-				}
-				newLine();
-			}
-		}
-		//when you have 5 live
-		else if (lives == 5)
-		{
-			for (int i = 0; i < 5; i++)
-			{
+					for (int j = 0; j < 1; j++)
+					{
 
-				for (int j = 0; j < 1; j++)
+						MakeMap[i][2] = "x ";
+					}
+					newLine();
+				}
+			}
+
+			//when you have 4 live
+			else if (lives == 4)
+			{
+				for (int i = 0; i < 1; i++)
 				{
 
-					MakeMap[i][2] = "x ";
+					for (int j = 2; j < 8; j++)
+					{
+
+						MakeMap[0][j] = "x ";
+					}
+					newLine();
+
 				}
-				newLine();
-			}
-		}
 
-		//when you have 4 live
-		else if (lives == 4)
-		{
-			for (int i = 0; i < 1; i++)
-			{
-
-				for (int j = 2; j < 8; j++)
+				for (int i = 0; i < 1; i++)
 				{
 
-					MakeMap[0][j] = "x ";
-				}
-				newLine();
+					for (int j = 0; j < 1; j++)
+					{
 
+						MakeMap[1][7] = "x ";
+					}
+					newLine();
+				}
 			}
 
-			for (int i = 0; i < 1; i++)
+			//when you have 3 lives
+			else if (lives == 3)
 			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 0; i < 1; i++)
 				{
 
-					MakeMap[1][7] = "x ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[2][7] = "0 ";
+					}
+					newLine();
 				}
-				newLine();
-			}
-		}
 
-		//when you have 3 lives
-		else if (lives == 3)
-		{
-			for (int i = 0; i < 1; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 3; i < 5; i++)
 				{
 
-					MakeMap[2][7] = "0 ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][7] = "| ";
+					}
+					newLine();
 				}
-				newLine();
 			}
 
-			for (int i = 3; i < 5; i++)
+			//when you have 2 live
+			else if (lives == 2)
 			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 3; i < 4; i++)
 				{
 
-					MakeMap[i][7] = "| ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][7] = "|x";
+					}
+
 				}
-				newLine();
-			}
-		}
 
-		//when you have 2 live
-		else if (lives == 2)
-		{
-			for (int i = 3; i < 4; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 3; i < 4; i++)
 				{
 
-					MakeMap[i][7] = "|x";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][6] = " x";
+					}
+
 				}
 
-			}
-
-			for (int i = 3; i < 4; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 4; i < 5; i++)
 				{
 
-					MakeMap[i][6] = " x";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][6] = "x ";
+					}
+
 				}
 
-			}
-
-			for (int i = 4; i < 5; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 4; i < 5; i++)
 				{
 
-					MakeMap[i][6] = "x ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][8] = "x ";
+					}
+
 				}
 
+
 			}
-
-			for (int i = 4; i < 5; i++)
+			//when you have 1 live
+			else if (lives == 1)
 			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 5; i < 6; i++)
 				{
 
-					MakeMap[i][8] = "x ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][6] = " x";
+					}
+
 				}
 
-			}
-
-
-		}
-		//when you have 1 live
-		else if (lives == 1)
-		{
-			for (int i = 5; i < 6; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 5; i < 6; i++)
 				{
 
-					MakeMap[i][6] = " x";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][7] = " x";
+					}
+
 				}
 
-			}
-
-			for (int i = 5; i < 6; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 6; i < 7; i++)
 				{
 
-					MakeMap[i][7] = " x";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][6] = "x ";
+					}
+
 				}
 
-			}
-
-			for (int i = 6; i < 7; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
+				for (int i = 6; i < 7; i++)
 				{
 
-					MakeMap[i][6] = "x ";
+					for (int j = 0; j < 1; j++)
+					{
+
+						MakeMap[i][8] = "x ";
+					}
+
 				}
-
 			}
+		} while (lives >= 1);
 
-			for (int i = 6; i < 7; i++)
-			{
-
-				for (int j = 0; j < 1; j++)
-				{
-
-					MakeMap[i][8] = "x ";
-				}
-
-			}
-		}
-	} while (lives >= 1);
-
-	newLine();
-	cout << "You lose!\n";
-	cout << "Your word: " << que[random];
-	newLine();
-}
-
-void level1(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
-{
-	random = rand() % 9 + 0;
-	if (que[random].length() > 4)
-	{
-		level1(loop, que, ansUser, random, lives, point);
-	}
-	else
-	{
-		game(loop, que, ansUser, random, lives, point);
+		newLine();
+		cout << "You lose!\n";
+		cout << "Your word: " << que[random];
+		newLine();
 	}
 }
 
-void level2(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+void level1(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
 {
-	random = rand() % 9 + 0;
-	if (que[random].length() < 5)
+	if (loop)
 	{
-		level2(loop, que, ansUser, random, lives, point);
-	}
-	else if (que[random].length() > 9)
-	{
-		level2(loop, que, ansUser, random, lives, point);
-	}
-	else
-	{
-		game(loop, que, ansUser, random, lives, point);
+
+		random = rand() % 9 + 0;
+		if (que[random].length() > 4)
+		{
+			level1(loop, que, ansUser, random, lives, point);
+		}
+		else
+		{
+			game(loop, que, ansUser, random, lives, point);
+		}
 	}
 }
 
-void level3(bool loop, string que[], string ansUser, int& random, int& lives, int& point)
+void level2(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
 {
-	random = rand() % 9 + 0;
-	if (que[random].length() < 10)
+	if (loop)
 	{
-		level3(loop, que, ansUser, random, lives, point);
+		random = rand() % 9 + 0;
+		if (que[random].length() < 5)
+		{
+			level2(loop, que, ansUser, random, lives, point);
+		}
+		else if (que[random].length() > 9)
+		{
+			level2(loop, que, ansUser, random, lives, point);
+		}
+		else
+		{
+			game(loop, que, ansUser, random, lives, point);
+		}
 	}
-	else
+}
+
+void level3(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
+{
+	if (loop)
 	{
-		game(loop, que, ansUser, random, lives, point);
+
+		random = rand() % 9 + 0;
+		if (que[random].length() < 10)
+		{
+			level3(loop, que, ansUser, random, lives, point);
+		}
+		else
+		{
+			game(loop, que, ansUser, random, lives, point);
+		}
 	}
 }
