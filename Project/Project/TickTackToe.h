@@ -16,23 +16,41 @@ using namespace std;
 // Functions - Declaration ::::::>
 void t_main();
 
-void t_gameLoop(int points[]);
+void t_gameLoop(int points[], int botOn);
 
 void t_printMap(string map[], int maxX);
 
 void t_tileCheck(string map[], string mark, int num, int player);
 
-int checkwin(string map[]);
+int t_checkwin(string map[]);
+
+void t_printHUD(int points[], string pMark, string eMark, int botOn);
 
 // Functions - Definition ::::::>
 void t_main()
 {
-	int points[2]{ 0,0 };
+	int points[]{ 0,0 };
+	int botOn = 0; //0 - P2; 1 - bot
 
-	t_gameLoop(points);
+	system("CLS");
+
+	cout << "1. Player vs Player\n2. Player vs Bot";
+	switch (_getch())
+	{
+	case '1':
+		botOn = 0;
+		break;
+	case '2':
+		botOn = 1;
+		break;
+	default:
+		break;
+	}
+
+	t_gameLoop(points, botOn);
 }
 
-void t_gameLoop(int points[])
+void t_gameLoop(int points[], int botOn)
 {
 	string map[9]; //maxX = 3 - 00 10 20 /\ 01 11 21 /\ 02 12 22 |\/\/| 0 1 2 3 4 5 6 7 8 9
 	const int maxX = 3;
@@ -59,9 +77,10 @@ void t_gameLoop(int points[])
 	cout << "Enemy Mark?\n";
 	getline(cin, eMark);
 	eMark = eMark[0];
-	cout << "So you have chosen " << pMark << " and " << eMark; //TODO FIX this shit
-	//TODO use tileCheck for both players and bot
-	//TODO let user choose between p2 and bot
+
+	cout << "So you have chosen " << pMark << " and " << eMark; 
+	_getch();
+
 	int num;
 	char ch;
 
@@ -71,12 +90,7 @@ void t_gameLoop(int points[])
 		titleMsg("TickTackToe");
 		newLine(2);
 
-		cout << "Player 1: " << pMark << " " << points[0];
-		newLine(2);
-
-		cout << "Bot: " << eMark << " " << points[1];
-		newLine(2);
-
+		t_printHUD(points, pMark, eMark, botOn);
 
 		t_printMap(map, maxX);
 
@@ -94,17 +108,52 @@ void t_gameLoop(int points[])
 			Msg();
 			continue;
 		}
-		inTmain = checkwin(map);
+		inTmain = t_checkwin(map);
 		if (inTmain == 1)
 		{
 			winner = 0;
 			break;
 		}
 
+		system("CLS");
+		titleMsg("TickTackToe");
+		newLine(2);
 
-		num = rng(0, 9);
-		t_tileCheck(map, eMark, num, 1);
-		inTmain = checkwin(map);
+		t_printHUD(points, pMark, eMark, botOn);
+
+		t_printMap(map, maxX);
+		Sleep(200);
+
+		if (botOn == 1)
+		{
+
+			num = rng(0, 9);
+			t_tileCheck(map, eMark, num, 1);
+			inTmain = t_checkwin(map);
+		}
+		else
+		{
+			ch = _getch();
+			num = int(ch) - 48;
+
+			if (num >= 0 and num <= 8) //Nums
+			{
+				t_tileCheck(map, eMark, num, 0);
+			}
+			else if (ch == 27) //Esc
+				break;
+			else
+			{
+				Msg();
+				continue;
+			}
+			inTmain = t_checkwin(map);
+			if (inTmain == 1)
+			{
+				winner = 1;
+				break;
+			}
+		}
 		if (inTmain == 1)
 		{
 			winner = 1;
@@ -128,7 +177,11 @@ void t_gameLoop(int points[])
 		points[0]++;
 		break;
 	case 1:
-		cout << "Winner is Bot";
+		cout << "Winner is ";
+		if (botOn == 1)
+			cout << "Bot";
+		else
+			cout << "Player 2";
 		points[1]++;
 		break;
 	case 3:
@@ -139,11 +192,7 @@ void t_gameLoop(int points[])
 	}
 	newLine(2);
 
-	cout << "Player 1: " << pMark << " " << points[0];
-	newLine(2);
-
-	cout << "Bot: " << eMark << " " << points[1];
-	newLine(2);
+	t_printHUD(points, pMark, eMark, botOn);
 
 	t_printMap(map, maxX);
 
@@ -156,11 +205,12 @@ void t_gameLoop(int points[])
 	{
 	case 'y':
 	case '1':
-		t_gameLoop(points);
+		t_gameLoop(points, botOn);
 		break;
 	case 'n':
 	case '0':
 		Msg("Thanks for playing");
+		Sleep(500);
 		break;
 	default:
 		Msg();
@@ -190,7 +240,13 @@ void t_tileCheck(string map[], string mark, int num, int player) //player: 0 = p
 	}
 	else
 	{
-		Msg("Tile Taken", 5);
+		if (player == 1)
+		{
+			num = rng(0, 9);
+			t_tileCheck(map, mark, num, 1);
+		}
+		else
+			Msg("Tile Taken", 5);
 	}
 }
 
@@ -199,7 +255,7 @@ void t_tileCheck(string map[], string mark, int num, int player) //player: 0 = p
 //O GAME IS OVER AND NO RESULT
 //-1 FOR GAME IS IN PROGRESS
 
-int checkwin(string map[])
+int t_checkwin(string map[])
 {
 	if (map[0] == map[1] && map[1] == map[2])
 		return 1;
@@ -223,6 +279,19 @@ int checkwin(string map[])
 		return 0;
 	else
 		return -1;
+}
+
+void t_printHUD(int points[], string pMark, string eMark, int botOn)
+{
+	cout << "Player 1: " << pMark << " " << points[0];
+	newLine(2);
+
+	if (botOn == 1)
+		cout << "Bot: ";
+	else
+		cout << "Player 2: ";
+	cout << eMark << " " << points[1];
+	newLine(2);
 }
 
 //[x][y] to [z]: z = x + (y * maxX)
