@@ -3,6 +3,8 @@
 #include<string>
 #include <time.h> 
 
+int point = 0; //ask martin for help!!!
+
 using namespace std;
 
 void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, int& point, string lock[]);
@@ -15,17 +17,21 @@ void level2(bool& loop, string que[], string ansUser, int& random, int lives, in
 
 void level3(bool& loop, string que[], string ansUser, int& random, int lives, int& point);
 
+void infoGame();
+
 void h_main(string lock[])
 {
 
-	// second game test
+
 	srand(time(NULL));
 	int random;
-	int point = 0;
 	int lives = 8;
 	bool loop = true;
-	random = rand() % 9 + 0;
-	string que[10] = { "cat","fish","dog","jazz","people","boris","congratulations","pewdiepie","pizza" ,"google" };
+	random = rand() % 19 + 0;
+	string que[] = { "cat","fish","dog","jazz","people",
+	"congratulation","pewdiepie","pizza" ,"google","door",
+	"bot","youtube","tank","keyboard","notebook",
+	"bus","martin","boris","planetarium","observatory"}; //todo add more words
 	string ansUser;
 	int stopProgram = que[random].length();
 	
@@ -46,16 +52,18 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 	{
 		system("CLS");
 		titleMsg("Hangman Main Menu");
-		newLine();
-		cout << "1. 1-level" << " [" << unlock << "]\n";
-		cout << "2. 2-level" << " [" << lock[0] << "]\n";
-		cout << "3. 3-level" << " [" << lock[1] << "]\n";
-		cout << "4. back to main menu\n";
+		cout << "Welcome to Hangman";
+		
+		cout << "\n\n1. Read about the Hangman\n";
+		cout << "2. 1-level" << " [" << unlock << "]\n";
+		cout << "3. 2-level" << " [" << lock[0] << "]\n";
+		cout << "4. 3-level" << " [" << lock[1] << "]\n";
+		cout << "5. Quit...\n";
 
 		cout << "Your point: " << point;
 		newLine();
 		cin >> chooseOpstion;
-		if (chooseOpstion == 2)
+		if (chooseOpstion == 3)
 		{
 
 			if (point >= 500 and lock[0] == lockCheck)
@@ -80,7 +88,7 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 			}
 		}
 
-		if (chooseOpstion == 3)
+		if (chooseOpstion == 4)
 		{
 
 			if (point >= 1000 and lock[1] == lockCheck)
@@ -111,10 +119,16 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 		case 0:
 			point = point + 1000;
 			break;
+
 		case 1:
+			infoGame();
+			break;
+
+		case 2:
 			level1(loop, que, ansUser, random, lives, point);
 			break;
-		case 2:
+
+		case 3:
 			if (lock[0] == unlock) {
 				level2(loop, que, ansUser, random, lives, point);
 
@@ -126,7 +140,8 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 				system("pause");
 			}
 			break;
-		case 3:
+
+		case 4:
 			if (lock[1] == unlock) {
 				level3(loop, que, ansUser, random, lives, point);
 
@@ -138,7 +153,8 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 				system("pause");
 			}
 			break;
-		case 4:
+
+		case 5:
 			loop = false;
 			break;
 		}
@@ -148,12 +164,28 @@ void HangMenu(bool& loop, string que[], string ansUser, int& random, int lives, 
 	}
 }
 
+void infoGame() 
+{
+	system("CLS");
+
+	titleMsg("Hangman Info");
+	cout << "Hangman is a word game for children to teach them about word.\n";
+	cout << "Player guess a word or letter and if it correct you get point\nfor each correct letter you get 10 point.\n";
+	cout << "\nYou have 3 levels:\n";
+	cout << "\n-First level give you word between 3 and 4 letter.\n";
+	cout << "\n-Second level give you word between 5 and 7 letter. (need 500 points)\n";
+	cout << "\n-Third level give you word than 8 letter. (need 1000 points)\n";
+
+	newLine(2);
+	cout << "Press any button to continue.";
+	_getch();
+}
 
 int game(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
 {
 	if (loop)
 	{
-
+		string checkLetter[31];
 		int stopProgram = que[random].length();
 		string MakeWord[50];
 		string MakeMap[20][20];
@@ -250,9 +282,10 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 				}
 				else
 				{
-					cout << "Your answear is wrong!\n";
+					Msg("Your letter is wrong!");
+					newLine();
 					lives--;
-					system("pause");
+					_getch();
 				}
 				break;
 
@@ -272,12 +305,26 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 						{
 							if (que[random].substr(i, 1) == ansUser)
 							{
-								MakeWord[i] = ansUser;
-								stopProgram--;
-								point = point + 10;
+								
+								if (ansUser == checkLetter[i])
+								{
+									cout << "You already you this word";
+									_getch();
+									break;
+								}
+								else
+								{
+									MakeWord[i] = ansUser;
+									stopProgram--;
+									checkLetter[i] = ansUser;
+									point = point + 10;
+								}
+
 
 							}
+
 						}
+						
 						if (stopProgram == 0)
 						{
 							cout << "Your word: " << que[random];
@@ -294,6 +341,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 					Msg("Your letter is wrong!");
 					newLine();
 					lives--;
+					_getch();
 				}
 
 				break;
@@ -311,6 +359,8 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 				Msg();
 				break;
 			}
+
+
 
 			//start bilding a hangman
 			//when you have 7 live
@@ -511,6 +561,8 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 		cout << "You lose!\n";
 		cout << "Your word: " << que[random];
 		newLine();
+		_getch();
+
 	}
 }
 
@@ -519,7 +571,7 @@ void level1(bool& loop, string que[], string ansUser, int& random, int lives, in
 	if (loop)
 	{
 
-		random = rand() % 9 + 0;
+		random = rand() % 19 + 0;
 		if (que[random].length() > 4)
 		{
 			level1(loop, que, ansUser, random, lives, point);
@@ -535,12 +587,12 @@ void level2(bool& loop, string que[], string ansUser, int& random, int lives, in
 {
 	if (loop)
 	{
-		random = rand() % 9 + 0;
+		random = rand() % 19 + 0;
 		if (que[random].length() < 5)
 		{
 			level2(loop, que, ansUser, random, lives, point);
 		}
-		else if (que[random].length() > 9)
+		else if (que[random].length() > 7)
 		{
 			level2(loop, que, ansUser, random, lives, point);
 		}
@@ -556,8 +608,8 @@ void level3(bool& loop, string que[], string ansUser, int& random, int lives, in
 	if (loop)
 	{
 
-		random = rand() % 9 + 0;
-		if (que[random].length() < 10)
+		random = rand() % 19 + 0;
+		if (que[random].length() < 8)
 		{
 			level3(loop, que, ansUser, random, lives, point);
 		}
