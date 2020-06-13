@@ -81,13 +81,13 @@ inline void titleMsg(string str)
 		out += "=-=}>~~<| " + str + " |>~~<{=-=\n\n";
 		break;
 	case 2:
-		out += ";=;[]>---<| " + str + "|>---<[];=;\n\n";
+		out += ";=;[]>---<| " + str + " |>---<[];=;\n\n";
 		break;
 	case 3:
-		out += ":....:| " + str + "|:....:\n\n";
+		out += ":....:| " + str + " |:....:\n\n";
 		break;
 	case 4:
-		out += "[]-----| " + str + "|-----[]\n\n";
+		out += "[]-----| " + str + " |-----[]\n\n";
 		break;
 	default:
 		break;

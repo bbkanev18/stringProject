@@ -126,7 +126,6 @@ void t_gameLoop(int points[], int botOn)
 
 		if (botOn == 1)
 		{
-
 			num = rng(0, 9);
 			t_tileCheck(map, eMark, num, 1);
 			inTmain = t_checkwin(map);
