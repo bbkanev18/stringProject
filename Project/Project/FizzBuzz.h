@@ -200,31 +200,43 @@ void f_ruleRemove(RULES* rule, int& rNum)
 {
 	int index;
 	newLine(2);
-	cout << "Choose id: ";
+	cout << "Choose id (-1 to exit.): ";
 	cin >> index;
 
 	system("CLS");
 
-	if (index > rNum or index < 0) //checking index in range of client counter 
+	if (index != -1)
 	{
-		Msg();
-		newLine();
-		f_ruleShow(rule, rNum);
-		f_ruleRemove(rule, rNum);
-	}
-	else
-	{
-		f_rulePrint(rule[index], index);
 
-		//seperate
-		for (int i = index; i < rNum - 1; i++) //delete index register client
+		if (rNum <= 0)
 		{
-			rule[i] = rule[i + 1];
+			Msg("No more rules");
+			Sleep(600);
 		}
-		rNum--;
+		else
+		{
+			if (index >= rNum or index < 0) //checking index in range of client counter 
+			{
+				Msg();
+				newLine();
+				f_ruleShow(rule, rNum);
+				f_ruleRemove(rule, rNum);
+			}
+			else
+			{
+				f_rulePrint(rule[index], index);
 
-		Msg("Deleted", 6);
-		Sleep(600);
+				//seperate
+				for (int i = index; i < rNum - 1; i++) //delete index register client
+				{
+					rule[i] = rule[i + 1];
+				}
+				rNum--;
+
+				Msg("Deleted", 6);
+				Sleep(600);
+			}
+		}
 	}
 }
 

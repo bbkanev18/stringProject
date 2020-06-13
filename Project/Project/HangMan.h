@@ -316,16 +316,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 
 			switch (a)
 			{
-			case 0:
-
-				cout << "\nYou are a fucking idiot! I said first write a number no letter stupped!\n"; //TODO Ask Boris if this should stay?
-				cout << "You are dead instantly because you are stuppid!\n";
-				sum = lives - 8;
-				cout << "lives - 8 = " << sum;
-				cout << "\nYou lose :(";
-				errC = _getch();
-				return 0;
-				//guess a word
+			//guess a word
 			case 1:
 				if (ansUser == que[random])
 				{
@@ -400,15 +391,6 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 
 				break;
 			}
-			case 2147483647:
-				cout << "\nI said to enter 1 or 2 not 999999999023820649264204 you are a fucking idiot. For that you lose the game, idiot.\n";
-				cout << "You are instantly dead because you are stuppid!\n";
-				sum = lives - 8;
-				cout << "lives - 8 = " << sum;
-				cout << "\nYou lose :(";
-				errC = _getch();;
-				return 0;
-				break;
 			default:
 				Msg();
 				break;
