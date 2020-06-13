@@ -1,7 +1,5 @@
 /*
-//TODO Implement idea 1 from hangman.h
-
-
+//TODO Fix English --mistakes-- Happy Accidents :)
 
 //FizzBuzz
 	//Pre Game - Initialise Varibles,

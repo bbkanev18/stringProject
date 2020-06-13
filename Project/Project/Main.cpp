@@ -15,9 +15,9 @@ using namespace std;
 
 
 // Functions - Declaration ::::::>
-void gameMenu(string lock[]);
+void gameMenu(string lock[], int &point);
 
-void mainMenu(string lock[]);
+void mainMenu(string lock[], int &point);
 
 void aboutUs();
 
@@ -27,12 +27,14 @@ void programInfo();
 int main()
 {
 	//for hangman game
-	string lock[2] = { "lock","lock" };
-	mainMenu(lock);
+	int point = 0;
+	string lock[2] = { "locked","locked" };
+
+	mainMenu(lock, point);
 }
 
 // Functions - Definition ::::::>
-void gameMenu(string lock[])
+void gameMenu(string lock[], int &point)
 {
 	
 	bool inLoop = true;
@@ -42,7 +44,6 @@ void gameMenu(string lock[])
 
 		titleMsg("Choose a game");
 		cout << "Esc. Quit...\n1. FizzBuzz...\n2. Hangman...\n3. Tick Tack Toe...";
-		//TODO add ticktacktoe option if it works :)
 
 		switch (_getch())
 		{
@@ -53,7 +54,7 @@ void gameMenu(string lock[])
 			f_main();
 			break;
 		case '2':
-			h_main(lock);
+			h_main(lock, point);
 			break;
 		case '3':
 			t_main();
@@ -67,7 +68,7 @@ void gameMenu(string lock[])
 	}
 }
 
-void mainMenu(string lock[])
+void mainMenu(string lock[], int &point)
 {
 	bool inLoop = true;
 	while (inLoop)
@@ -86,7 +87,7 @@ void mainMenu(string lock[])
 			inLoop = false;
 			break;
 		case '1':
-			gameMenu(lock);
+			gameMenu(lock, point);
 			break;
 		case '2':
 			aboutUs();
@@ -116,8 +117,10 @@ void aboutUs()
 	cout << "If you wish to contact us you can send an email to: \n\t->Martin - mssevov18@codingburgas.bg\n\t->Boris - bbkanev18@codingburgas.bg";
 	newLine(2);
 
-	cout << "Or you can fill in the Bug/Error Report Form by following this link: \n\thttps://forms.office.com/Pages/ResponsePage.aspx?id=S_1sXtMSpEuOqRnbGVq9pAP1BRj8i3VFmY5bGCYTZDNUQlRGNDY1STIxTjZZMjZaUFhYUkFPMjdYNC4u";
+	cout << "Or you can fill in the Bug/Error Report Form by following this link: \n\t https://forms.office.com/Pages/ResponsePage.aspx?id=S_1sXtMSpEuOqRnbGVq9pAP1BRj8i3VFmY5bGCYTZDNUQlRGNDY1STIxTjZZMjZaUFhYUkFPMjdYNC4u";
+	newLine(2);
 
+	cout << "If you want to check out the Git repo: \n\t https://github.com/bbkanev18/stringProject";
 	newLine(2);
 
 	Msg("Press 3 keys to continue");
@@ -133,7 +136,7 @@ void programInfo()
 	titleMsg("Program Info");
 	newLine(2);
 
-	cout << "\t->Martin Sevov - Worked on Main.cpp, FizzBuzz.h, TickTackToe.h, Main Function.h;\n\t->Boris Kanev - Worked on Main.cpp, HangMan.h, MainFunction.h and is the team leader;";
+	cout << "->Martin Sevov - Worked on Main.cpp, FizzBuzz.h, TickTackToe.h, Main Function.h;\n->Boris Kanev - Worked on Main.cpp, HangMan.h, MainFunction.h;";
 	newLine(2);
 
 	cout << "The Program was made in Visual Studio with C++. We used Git to collaborate and work on the Program.";

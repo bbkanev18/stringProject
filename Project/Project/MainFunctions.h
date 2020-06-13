@@ -13,7 +13,7 @@ using namespace std;
 
 
 // Functions - Declaration ::::::>
-inline void Msg(string str = "Error", int n = 3);
+inline void Msg(string str = "Error", int n = 3, int e = 3);
 
 inline int pNumCheck(int in);
 
@@ -24,9 +24,27 @@ inline void titleMsg(string str = "Menu");
 inline void newLine(int amount = 1);
 
 // Functions - Definition ::::::>
-inline void Msg(string str, int n)
+inline void Msg(string str, int n, int e)
 {
-	cout << "\n" << str << "!";
+	cout << "\n" << str;
+	switch (e)
+	{
+	case 1:
+		cout << ".";
+		break;
+	case 2:
+		cout << "?";
+		break;
+	case 3:
+		cout << "!";
+		break;
+	case 4:
+		cout << "!?";
+		break;
+	default:
+		cout << "!";
+		break;
+	}
 	for (int i = 0; i < n; i++)
 	{
 		Sleep(100);
