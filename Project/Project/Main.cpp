@@ -22,7 +22,9 @@ void mainMenu();
 // Main ::::::>
 int main()
 {
+	//for hangman game
 	string lock[2] = { "lock","lock" };
+
 	gameMenu(lock);
 }
 
