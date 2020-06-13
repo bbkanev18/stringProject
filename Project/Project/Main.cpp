@@ -5,6 +5,8 @@
 
 using namespace std;
 
+char errC; //To get rid of _getch errors :)
+
 // Header Files ::::::>
 #include "FizzBuzz.h"
 #include "HangMan.h"
@@ -124,9 +126,9 @@ void aboutUs()
 	newLine(2);
 
 	Msg("Press 3 keys to continue");
-	_getch();
-	_getch();
-	_getch();
+	errC = _getch();
+	errC = _getch();
+	errC = _getch();
 }
 
 void programInfo()
@@ -163,7 +165,7 @@ void programInfo()
 
 	newLine(2);
 	Msg("Press 3 keys to continue");
-	_getch();
-	_getch();
-	_getch();
+	errC = _getch();
+	errC = _getch();
+	errC = _getch();
 }

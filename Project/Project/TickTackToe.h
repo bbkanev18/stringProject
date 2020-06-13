@@ -26,6 +26,8 @@ int t_checkwin(string map[]);
 
 void t_printHUD(int points[], string pMark, string eMark, int botOn);
 
+int t_playerMove(string map[], string mark, int player);
+
 // Functions - Definition ::::::>
 void t_main()
 {
@@ -72,51 +74,45 @@ void t_gameLoop(int points[], int botOn)
 
 	cout << "Player Mark?\n";
 	getline(cin, pMark);
-	pMark = pMark[0];
+	pMark = toupper(pMark[0]);
 
 	cout << "Enemy Mark?\n";
 	getline(cin, eMark);
-	eMark = eMark[0];
+	eMark = toupper(eMark[0]);
 
 	cout << "So you have chosen " << pMark << " and " << eMark; 
-	_getch();
+	errC = _getch();
 
 	int num;
 	char ch;
 
-	while (inTmain == -1)
+	while (inTmain == -1) 
 	{
 		system("CLS");
-		titleMsg("TickTackToe");
+		titleMsg("Tick Tack Toe");
 		newLine(2);
 
 		t_printHUD(points, pMark, eMark, botOn);
 
 		t_printMap(map, maxX);
 
-		ch = _getch();
-		num = int(ch) - 48;
-
-		if (num >= 0 and num <= 8) //Nums
-		{
-			t_tileCheck(map, pMark, num, 0);
-		}
-		else if (ch == 27) //Esc
-			break;
-		else
-		{
-			Msg();
-			continue;
-		}
-		inTmain = t_checkwin(map);
+		newLine(2);
+		cout << "Player 1's Turn";
+		
+		inTmain = t_playerMove(map, pMark, 0);
 		if (inTmain == 1)
 		{
 			winner = 0;
 			break;
 		}
+		else if (inTmain == 2)
+		{
+			winner = 4;
+			break;
+		}
 
 		system("CLS");
-		titleMsg("TickTackToe");
+		titleMsg("Tick Tack Toe");
 		newLine(2);
 
 		t_printHUD(points, pMark, eMark, botOn);
@@ -126,66 +122,63 @@ void t_gameLoop(int points[], int botOn)
 
 		if (botOn == 1)
 		{
-
+			
 			num = rng(0, 9);
 			t_tileCheck(map, eMark, num, 1);
 			inTmain = t_checkwin(map);
 		}
 		else
 		{
-			ch = _getch();
-			num = int(ch) - 48;
-
-			if (num >= 0 and num <= 8) //Nums
-			{
-				t_tileCheck(map, eMark, num, 0);
-			}
-			else if (ch == 27) //Esc
-				break;
-			else
-			{
-				Msg();
-				continue;
-			}
-			inTmain = t_checkwin(map);
-			if (inTmain == 1)
-			{
-				winner = 1;
-				break;
-			}
+			newLine(2);
+			cout << "Player 2's Turn";
+			
+			inTmain = t_playerMove(map, eMark, 2);
 		}
 		if (inTmain == 1)
 		{
 			winner = 1;
 			break;
 		}
-
-		if (inTmain == 0)
+		else if (inTmain == 0)
 		{
 			winner = 3;
 			break;
 		}
+		else if (inTmain == 2)
+		{
+			winner = 4;
+			break;
+		}
+
 
 	}
 
 	system("CLS");
 
+	string msg = "";
 	switch (winner)
 	{
 	case 0:
-		cout << "Winner is Player 1";
+		msg += "Winner is Player 1";
 		points[0]++;
+		Msg(msg, 5);
 		break;
 	case 1:
-		cout << "Winner is ";
+		msg += "Winner is ";
 		if (botOn == 1)
-			cout << "Bot";
+			msg += "Bot";
 		else
-			cout << "Player 2";
+			msg += "Player 2";
 		points[1]++;
+		Msg(msg, 5);
 		break;
 	case 3:
-		cout << "Draw";
+		msg += "Draw";
+		Msg(msg, 5, 4);
+		break;
+	case 4:
+		msg += "Forfeit";
+		Msg(msg, 5, 1);
 		break;
 	default:
 		break;
@@ -198,17 +191,19 @@ void t_gameLoop(int points[], int botOn)
 
 	newLine(2);
 
-	cout << "Want to play again? y/n 1/0";
+	cout << "Want to play again? y/n 1/0 Enter/Escape";
 	newLine(2);
 
 	switch (_getch())
 	{
 	case 'y':
 	case '1':
+	case 13:
 		t_gameLoop(points, botOn);
 		break;
 	case 'n':
 	case '0':
+	case 27:
 		Msg("Thanks for playing");
 		Sleep(500);
 		break;
@@ -246,7 +241,11 @@ void t_tileCheck(string map[], string mark, int num, int player) //player: 0 = p
 			t_tileCheck(map, mark, num, 1);
 		}
 		else
+		{
 			Msg("Tile Taken", 5);
+			_getch();
+			t_playerMove(map, mark, player);
+		}
 	}
 }
 
@@ -254,28 +253,27 @@ void t_tileCheck(string map[], string mark, int num, int player) //player: 0 = p
 //1 FOR GAME IS OVER WITH RESULT
 //O GAME IS OVER AND NO RESULT
 //-1 FOR GAME IS IN PROGRESS
+//2 FOR EXIT
 
 int t_checkwin(string map[])
 {
-	if (map[0] == map[1] && map[1] == map[2])
+	if (map[0] == map[1] and map[1] == map[2])
 		return 1;
-	else if (map[3] == map[4] && map[4] == map[5])
+	else if (map[3] == map[4] and map[4] == map[5])
 		return 1;
-	else if (map[6] == map[7] && map[7] == map[8])
+	else if (map[6] == map[7] and map[7] == map[8])
 		return 1;
-	else if (map[0] == map[3] && map[3] == map[6])
+	else if (map[0] == map[3] and map[3] == map[6])
 		return 1;
-	else if (map[1] == map[4] && map[4] == map[7])
+	else if (map[1] == map[4] and map[4] == map[7])
 		return 1;
-	else if (map[2] == map[5] && map[5] == map[8])
+	else if (map[2] == map[5] and map[5] == map[8])
 		return 1;
-	else if (map[0] == map[4] && map[4] == map[8])
+	else if (map[0] == map[4] and map[4] == map[8])
 		return 1;
-	else if (map[2] == map[4] && map[4] == map[6])
+	else if (map[2] == map[4] and map[4] == map[6])
 		return 1;
-	else if (map[1] != "1" && map[2] != "2" && map[3] != "3"
-		&& map[4] != "4" && map[5] != "5" && map[6] != "6"
-		&& map[7] != "7" && map[8] != "8" && map[0] != "0")
+	else if (map[0] != "0" and map[1] != "1" and map[2] != "2" and map[3] != "3" and map[4] != "4" and map[5] != "5" and map[6] != "6" and map[7] != "7" and map[8] != "8")
 		return 0;
 	else
 		return -1;
@@ -292,6 +290,25 @@ void t_printHUD(int points[], string pMark, string eMark, int botOn)
 		cout << "Player 2: ";
 	cout << eMark << " " << points[1];
 	newLine(2);
+}
+
+int t_playerMove(string map[], string mark, int player)
+{
+	char ch = _getch();
+	int num = int(ch) - 48;
+
+	if (num >= 0 and num <= 8) //Nums
+	{
+		t_tileCheck(map, mark, num, player);
+		return t_checkwin(map);
+	}
+	else if (ch == 27) //Esc
+		return 2;
+	else
+	{
+		Msg();
+		t_playerMove(map, mark, player);
+	}
 }
 
 //[x][y] to [z]: z = x + (y * maxX)

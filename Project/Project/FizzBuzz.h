@@ -114,7 +114,7 @@ void f_gameLoop(RULES* rule, int rNum)
 		cout << str;
 		newLine();
 	}
-	_getch();
+	errC = _getch();
 }
 
 void f_rulesMenu(RULES* rule, int& rNum)
@@ -160,7 +160,7 @@ void f_info() // Prints how the game is played
 
 	newLine(2);
 	cout << "Press any button to continue.";
-	_getch();
+	errC = _getch();
 }
 
 void f_ruleAdd(RULES& cRule, int num, int pNum, string str)
@@ -193,7 +193,7 @@ void f_ruleShow(RULES* rule, int rNum)
 	}
 	newLine(2);
 	cout << "Press a key to continue";
-	_getch();
+	errC = _getch();
 }
 
 void f_ruleRemove(RULES* rule, int& rNum)

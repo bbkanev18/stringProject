@@ -152,8 +152,8 @@ void infoGame()
 	cout << "\n-Third level gives you a word with more than 8 letters. (need 1000 points)\n";
 
 	newLine(2);
-	cout << "Press any button to continue.";
-	_getch();
+	Msg("Press any button to continue");
+	errC = _getch();
 }
 
 void level1(bool& loop, string que[], string ansUser, int& random, int lives, int& point)
@@ -168,7 +168,7 @@ void level1(bool& loop, string que[], string ansUser, int& random, int lives, in
 		}
 		else
 		{
-			game(loop, que, ansUser, random, lives, point); //gameT test
+			game(loop, que, ansUser, random, lives, point);
 		}
 	}
 }
@@ -213,7 +213,7 @@ void level3(bool& loop, string que[], string ansUser, int& random, int lives, in
 void saveAns(int& point, int cost, string lock[], int num)
 {
 	int chooseForLock;
-	Msg("Do you want to unlocked this level", 3, 3);
+	Msg("Do you want to unlock this level", 3, 3);
 	newLine();
 	cout << "1. yes\n";
 	cout << "2. no\n";
@@ -284,7 +284,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 			{
 				cout << MakeBorder[i];
 			}
-			cout << endl;
+			newLine();
 			//make map
 			for (int i = 0; i < 10; i++)
 			{
@@ -318,21 +318,21 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 			{
 			case 0:
 
-				cout << "\nYou a fucking bitch! I say first write a number no letter stupped!\n";
-				cout << "You dead instant because you are stupped!\n";
+				cout << "\nYou are a fucking idiot! I said first write a number no letter stupped!\n"; //TODO Ask Boris if this should stay?
+				cout << "You are dead instantly because you are stuppid!\n";
 				sum = lives - 8;
-				cout << "lives-8= " << sum;
+				cout << "lives - 8 = " << sum;
 				cout << "\nYou lose :(";
-				_getch();
+				errC = _getch();
 				return 0;
 				//guess a word
 			case 1:
 				if (ansUser == que[random])
 				{
-					cout << "Your answear is correct!";
+					Msg("Your answer is correct");
 					newLine();
 					point = point + (stopProgram * 10);
-					_getch();
+					errC = _getch();
 					return 0;
 				}
 				else
@@ -340,7 +340,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 					Msg("Your guess is wrong");
 					newLine();
 					lives--;
-					_getch();
+					errC = _getch();
 				}
 				break;
 
@@ -362,8 +362,8 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 
 								if (ansUser == checkLetter[i])
 								{
-									cout << "You already you this word";
-									_getch();
+									Msg("You have used this letter");
+									errC = _getch();
 									break;
 								}
 								else
@@ -384,7 +384,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 							cout << "Your word: " << que[random];
 							newLine();
 							cout << "You win!";
-							_getch();
+							errC = _getch();
 							return 0;
 						}
 					}
@@ -392,21 +392,21 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 				//incorrect
 				else
 				{
-					Msg("Your letter is wrong!");
+					Msg("Your letter is wrong");
 					newLine();
 					lives--;
-					_getch();
+					errC = _getch();
 				}
 
 				break;
 			}
 			case 2147483647:
-				cout << "\nI say enter 1 or 2 no 999999999023820649264204 you a fucking bitch. For that you lose the game, bitch.\n";
-				cout << "You dead instant because you are stupped!\n";
+				cout << "\nI said to enter 1 or 2 not 999999999023820649264204 you are a fucking idiot. For that you lose the game, idiot.\n";
+				cout << "You are instantly dead because you are stuppid!\n";
 				sum = lives - 8;
-				cout << "lives-8= " << sum;
+				cout << "lives - 8 = " << sum;
 				cout << "\nYou lose :(";
-				_getch();
+				errC = _getch();;
 				return 0;
 				break;
 			default:
@@ -615,7 +615,7 @@ int game(bool& loop, string que[], string ansUser, int& random, int lives, int& 
 		cout << "You lose!\n";
 		cout << "Your word: " << que[random];
 		newLine();
-		_getch();
+		errC = _getch();
 
 	}
 }
