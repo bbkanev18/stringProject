@@ -89,7 +89,7 @@ void t_gameLoop(int points[], int botOn)
 	while (inTmain == -1) 
 	{
 		system("CLS");
-		titleMsg("Tick Tack Toe");
+		titleMsg("Tic Tac Toe");
 		newLine(2);
 
 		t_printHUD(points, pMark, eMark, botOn);
@@ -112,7 +112,7 @@ void t_gameLoop(int points[], int botOn)
 		}
 
 		system("CLS");
-		titleMsg("Tick Tack Toe");
+		titleMsg("Tic Tac Toe");
 		newLine(2);
 
 		t_printHUD(points, pMark, eMark, botOn);

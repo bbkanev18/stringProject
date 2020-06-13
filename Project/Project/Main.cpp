@@ -10,7 +10,7 @@ char errC; //To get rid of _getch errors :)
 // Header Files ::::::>
 #include "FizzBuzz.h"
 #include "HangMan.h"
-#include "TickTackToe.h"
+#include "TicTacToe.h"
 #include "MainFunctions.h"
 
 // Structures ::::::>
@@ -45,7 +45,7 @@ void gameMenu(string lock[], int &point)
 		system("CLS");
 
 		titleMsg("Choose a game");
-		cout << "Esc. Quit...\n1. FizzBuzz...\n2. Hangman...\n3. Tick Tack Toe...";
+		cout << "Esc. Quit...\n1. FizzBuzz...\n2. Hangman...\n3. Tic Tac Toe...";
 
 		switch (_getch())
 		{
@@ -138,16 +138,16 @@ void programInfo()
 	titleMsg("Program Info");
 	newLine(2);
 
-	cout << "->Martin Sevov - Worked on Main.cpp, FizzBuzz.h, TickTackToe.h, Main Function.h;\n->Boris Kanev - Worked on Main.cpp, HangMan.h, MainFunction.h;";
+	cout << "->Martin Sevov - Worked on Main.cpp, FizzBuzz.h, TicTacToe.h, Main Function.h;\n->Boris Kanev - Worked on Main.cpp, HangMan.h, MainFunction.h;";
 	newLine(2);
 
 	cout << "The Program was made in Visual Studio with C++. We used Git to collaborate and work on the Program.";
 	newLine(2);
 
 
-	cout << "+-----------+   +----------+   +---------------+\n";
-	cout << "| Fizz Buzz |   | Hang Man |   | Tick Tack Toe |\n";
-	cout << "+-----^-----+   +----^-----+   +-------^-------+\n";
+	cout << "+-----------+   +----------+   +-------------+\n";
+	cout << "| Fizz Buzz |   | Hang Man |   | Tic Tac Toe |\n";
+	cout << "+-----^-----+   +----^-----+   +-------^-----+\n";
 	cout << "      |              |                 |\n";
 	cout << "      +--------------+-----------------+\n";
 	cout << "                     |\n";

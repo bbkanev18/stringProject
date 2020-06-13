@@ -32,7 +32,7 @@
     <ClInclude Include="MainFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TickTackToe.h">
+    <ClInclude Include="TicTacToe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

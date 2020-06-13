@@ -145,7 +145,7 @@
     <ClInclude Include="FizzBuzz.h" />
     <ClInclude Include="HangMan.h" />
     <ClInclude Include="MainFunctions.h" />
-    <ClInclude Include="TickTackToe.h" />
+    <ClInclude Include="TicTacToe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
