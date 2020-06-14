@@ -1,11 +1,11 @@
-# Documentation for structures school project
+# Documentation for string school project
 
 1. Who we are
 2. What the is project about
 3. How we made the project
 4. How the code works
 
-### Read the ReadMe for instructions on how to use the program
+### Read the ReadMe for instructions on how to start the program
 
 ## 1. Who we are
 
